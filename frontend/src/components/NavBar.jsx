@@ -16,11 +16,12 @@ SvgIcon
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 function HomeIcon(props) {
+  
   return (
     <SvgIcon {...props}>
       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -28,11 +29,9 @@ function HomeIcon(props) {
   );
 }
 
-
-
 export default function NavBar() {
+  const navigate = useNavigate();
   const [abrir, setAbrir] = useState(false);
-
 
   const handleOpenUserMenu = () => {
     setAbrir(true);
@@ -55,8 +54,9 @@ export default function NavBar() {
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Previne que la página se actualice
-      console.log('Presionaste Enter!');
+      event.preventDefault();
+      navigate(`/Perfil/${event.target.value}`);
+      window.location.reload()
     }
   };
 
@@ -135,7 +135,7 @@ export default function NavBar() {
               open={abrir}
               onClose={handleCloseUserMenu}
             >
-              <Link to="/perfil"
+              <Link to={`/Perfil/${cookies.get('usuario').registro_academico}`}
                 style={{ textDecoration: "none", color: "black" }}
               >
                 <MenuItem>Perfil</MenuItem>  </Link>

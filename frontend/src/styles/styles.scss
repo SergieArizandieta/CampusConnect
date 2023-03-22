@@ -39,3 +39,31 @@
   background-image: url('../imgs/bg2.png');
   background-size: cover;
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.nofound{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Agregamos esta propiedad */
+  justify-content: center;
+  align-items: center;
+  background-image: url('../imgs/404.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}

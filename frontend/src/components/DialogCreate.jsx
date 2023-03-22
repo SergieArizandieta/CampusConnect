@@ -84,7 +84,7 @@ export default function DialogCreate() {
       });
     })
     .catch((error) => {
-      console.error('Error:', error);
+      console.error('Error al publicar', error);
     });
 
   }

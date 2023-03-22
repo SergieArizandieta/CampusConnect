@@ -1,11 +1,19 @@
-import React from 'react';
-import { AppBar, Button, Divider, Paper, TextField, Typography } from '@mui/material';
+import React, {useState} from 'react';
+import { AppBar, Button, Divider, Paper, TextField, Typography,FormControl,InputLabel,OutlinedInput,InputAdornment,IconButton } from '@mui/material';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
 import SchoolIcon from '@mui/icons-material/School';
 import { Link } from 'react-router-dom';
 import logo from '../imgs/logo_azul.png'
 
 export default function SingUp() {
+   const [showPassword, setShowPassword] = useState(false);
 
+   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+   const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+   };
    const handleSubmit = (e) => {
       e.preventDefault();
   
@@ -13,24 +21,25 @@ export default function SingUp() {
       console.log(e.target[2].value);
       console.log(e.target[4].value);
       console.log(e.target[6].value);
-      console.log(e.target[8].value);
+      console.log(e.target[9].value);
+      
 
       let data = {  
          registro_academico: e.target[0].value,
          nombres: e.target[2].value,
          apellidos: e.target[4].value,
          password: e.target[6].value,
-         correo: e.target[8].value
+         correo: e.target[9].value
       }
-
-      const json = JSON.stringify(data);
+      console.log(data);
+      
 
       fetch(`http://localhost:4200/registro`, {
          method: "POST",
          headers: {
             "Content-Type": "application/json",
          },
-         body: json
+         body: JSON.stringify( data)
       }).then(function (response) {
          return response.json();
       }
@@ -38,6 +47,8 @@ export default function SingUp() {
          alert(data.msg);
       }
       );
+
+      e.target.reset();
    }
 
    return (
@@ -63,8 +74,29 @@ export default function SingUp() {
                      <TextField id="outlined-basic" label="Registro Academico" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
                      <TextField id="outlined-basic" label="Nombres" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
                      <TextField id="outlined-basic" label="Apellidos" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
-                     <TextField id="outlined-basic" label="Contraseña" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
-                     <TextField id="outlined-basic" label="Correo Electronico" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
+                     <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined" style={{ width: "80%", marginTop: "5%" }}>
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                           id="outlined-adornment-password"
+                           type={showPassword ? 'text' : 'password'}
+                           endAdornment={
+                              <InputAdornment position="end">
+                                 <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                 >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                 </IconButton>
+                              </InputAdornment>
+                           }
+                           label="Password"
+                        />
+                     </FormControl>
+
+                     <TextField id="outlined-basic" type="email" label="Correo Electronico" variant="outlined" style={{ width: "80%", marginTop: "5%" }} />
+
                      <Link to="/SingIn" >
                         <Typography style={{ fontSize: 11.5, textAlign: 'left', marginLeft: "10%", marginTop: "4.5%", marginBottom: "2%" }}>
                            ¿Ya tienes una cuenta?
