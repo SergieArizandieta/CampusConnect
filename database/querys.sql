@@ -1,5 +1,5 @@
 use proyecto;
-SELECT * FROM usuario;
+
 
 CREATE TABLE usuario (
     registro_academico INT NOT NULL AUTO_INCREMENT,
